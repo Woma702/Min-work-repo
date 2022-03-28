@@ -1,0 +1,53 @@
+# install Java JDK 1.8+ as a pre-requisit for tomcat to run.
+#sudo hostnamectl set-hostname tomcat9
+#sudo su - ec2-user
+cd /opt 
+sudo yum install git wget -y
+sudo yum install java-1.8.0-openjdk-devel -y
+# Download tomcat software and extract it.
+sudo yum install wget unzip -y
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.60/bin/apache-tomcat-9.0.60.tar.gz
+sudo tar -xvf apache-tomcat-9.0.60.tar.gz
+sudo rm apache-tomcat-9.0.60.tar.gz
+sudo mv apache-tomcat-9.0.60 tomcat9
+sudo chmod 777 -R /opt/tomcat9
+sudo sh /opt/tomcat9/bin/startup.sh
+
+id ec2-user
+
+# create a soft link to start and stop tomcat
+sudo ln -s /opt/tomcat9/bin/startup.sh /usr/bin/starttomcat
+sudo ln -s /opt/tomcat9/bin/shutdown.sh /usr/bin/stoptomcat
+sudo starttomcat
+
+===============================================================================================
+
+To acess the tomcat server we have to do this 
+
+vi /opt/tomcat9/webapps/manager/META-INF/context.xml
+      Tomcat server configuration:
+  vi /opt/tomcat9/webapps/manager/META-INF/context.xml
+
+ <!--
+
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+-->
+
+==================================================================================================
+cd /opt/tomcat9/
+cd conf/
+
+To see all the files that we have in tomcat server 
+Now is asking for user name and password we have to run this file 
+
+vi /opt/tomcat9/conf/tomcat-users.xml  # to add user
+
+<user username="landmark" password="Olisa85930@1" roles="manager-gui,admin-gui, manager-script"/>  
+<user username="admin" password="Olisa85930@1" roles="admin-gui"/> 
+<user username="simon" password="Olisa85930@1" roles="manager-gui,admin-gui,manager-script"/>
+<user username="frank" password="Olisa85930@1" roles="manager-gui,admin-gui,manager-script"/>
+
+====================================================================================================`
+
+
