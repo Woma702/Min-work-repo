@@ -1,0 +1,90 @@
+Installation of a web server 
+
+On a red heart server t2-medium 
+
+yum install httpd --- but you yoou have to be a super-user  so you can run the commands 
+
+
+webServers:
+  http 
+
+  sudo yum update
+  sudo yum install httpd
+exit
+  systemctl enable httpd
+  systemctl start httpd 
+
+ systemctl status httpd
+
+   54.204.83.221:80 
+
+Default home Directory:
+ cd /var/www/html
+  
+Firewall: 
+    Security Groups is firewall at the EC2 instance level
+      52.201.210.106:8080
+      
+Install apache web server 
+
+   users-->webServers/LB-->(8)appServer-->database 
+           1              2                3
+ 
+    sudo yum -y install httpd
+
+    sudo systemctl start httpd
+
+    sudo systemctl enable httpd
+    
+    port number for apache http 
+ 
+ 
+ we can deploy static content 
+
+  AHD:  
+    cd /var/www/html
+    
+                 sudo vi /var/www/html/index.html
+    
+               Welcome to Woma
+ 
+          <h1>This is Real Estate.</h1>
+          <h2>This where you put money in property.</h2>
+          <h1>JESUS IS LORD.</h1>
+
+          <h1>Welcome to stainslesssteal</h1>
+    
+          <h2>Welcome to stainslesssteal</h2>
+    
+          <h3>Welcome to stainslesssteal</h3>
+    
+          <h1>Jesus is in our midst</h1>
+          <h2> My first job is going to be blessed</h2>
+
+after this refersh the server 
+    '
+
+  http://3.238.177.166/test
+  http://3.238.177.166/logo.jpg
+    DEV 
+    STAGE 
+    PROD 
+
+Engineers:
+  Benjamin 24
+  Funmi
+  Ate group 10
+  Rodriquez Nwosu 
+  Veronica --
+  SYLVIA 
+  George
+Managers:
+  Olivia
+  Janet Adesina
+  Jevas 
+  Benjamin 
+  Braden
+  Vivian 
+  Cynthia
+
+Sacrificial // Most Developed --=CPD 
