@@ -335,6 +335,9 @@ scp target/app.war   ec2-user@172.31.85.245:/opt/tomcat9/webapps
 
 scp -i key.pem target/*war ec2-user@172.31.88.213:/opt/tomcat9/webapps/
 
+
+Make sure you have your tomcat key vi into maven server then run the chmod 400 comand with the name of the key 
+
  
 
 we have to creat a key file 
