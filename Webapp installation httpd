@@ -63,6 +63,12 @@ Install apache web server
 
 after this refersh the server 
     '
+    
+    sudo yum install httpd 
+sudo systemctl start httpd 
+sudo echo '<h1>Welcome to LandmakTechnology</h1>' >> /var/www/html/index.html 
+sudo echo '<h2>Java application for a fintech</h2>' >> /var/www/html/index.html 
+sudo echo '<h2>Proxy to boa-appServe  rs</h2>' >> /var/www/html/index.html 
 
   http://3.238.177.166/test
   http://3.238.177.166/logo.jpg
