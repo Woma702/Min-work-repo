@@ -1,0 +1,246 @@
+How to know ports you working on 
+
+run the command ----- netstat -tulpn 
+-t – is used to print TCP connections
+-u – is used to print UDP connections
+-l – Print all listening server sockets
+-p – Print all PID/Program name for sockets
+-n – Don’t resolve names from IPs
+
+To see ports that is running you run 
+ps -ef | grep http or --------
+
+
+
+ec2-user@ip-172-31-26-1 ~]$ sudo useradd sonar
+[ec2-user@ip-172-31-26-1 ~]$ sudo echo "sonar ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/sonar
+sonar ALL=(ALL) NOPASSWD:ALL
+[ec2-user@ip-172-31-26-1 ~]$ sudo hostnamectl set-hostname sonar
+[ec2-user@ip-172-31-26-1 ~]$ sudo su - ec2-user
+[ec2-user@sonar ~]$ clear
+[ec2-user@sonar ~]$ sudo su - sonar
+[sonar@sonar ~]$ cd /opt
+[sonar@sonar opt]$ ls
+[sonar@sonar opt]$ sudo yum -y install unzip wget git
+sudo wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+sudo yum install jdk-8u131-linux-x64.rpm -yUpdating Subscription Management repositories.
+
+[sonar@sonar opt]$ sudo wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+
+[sonar@sonar opt]$ ls
+jdk-8u131-linux-x64.rpm
+[sonar@sonar opt]$
+[sonar@sonar opt]$
+[sonar@sonar opt]$ sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip
+
+[sonar@sonar opt]$ sudo unzip sonarqube-7.8.zip
+
+[sonar@sonar opt]$ ls
+jdk-8u131-linux-x64.rpm  sonarqube-7.8  sonarqube-7.8.zip
+[sonar@sonar opt]$
+[sonar@sonar opt]$
+[sonar@sonar opt]$ rm -rf jdk-8u131-linux-x64.rpm sonarqube-7.8.zip
+rm: cannot remove 'jdk-8u131-linux-x64.rpm': Permission denied
+rm: cannot remove 'sonarqube-7.8.zip': Permission denied
+[sonar@sonar opt]$ sudo rm -rf jdk-8u131-linux-x64.rpm sonarqube-7.8.zip
+[sonar@sonar opt]$ ls
+sonarqube-7.8
+[sonar@sonar opt]$ sudo mv sonarqube-7.8 sonarqube
+[sonar@sonar opt]$ ls
+sonarqube
+[sonar@sonar opt]$ ls /opt/sonarqube/
+bin  conf  COPYING  data  elasticsearch  extensions  lib  logs  temp  web
+[sonar@sonar opt]$ sudo chown -R sonar:sonar /opt/sonarqube/
+[sonar@sonar opt]$ sudo chmod -R 775 /opt/sonarqube/
+[sonar@sonar opt]$ sudo chown -R sonar:sonar /opt/sonarqube/
+[sonar@sonar opt]$ sudo chmod -R 775 /opt/sonarqube/
+[sonar@sonar opt]$ sh /opt/sonarqube/bin/linux-x86-64/sonar.sh start
+Starting SonarQube...
+Started SonarQube.
+[sonar@sonar opt]$ sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status
+SonarQube is running (16044).
+[sonar@sonar opt]$ ls bin/
+ls: cannot access 'bin/': No such file or directory
+[sonar@sonar opt]$ ls
+sonarqube
+
+[sonar@sonar opt]$ ls
+sonarqube
+
+[sonar@sonar opt]$ cd sonarqube/
+[sonar@sonar sonarqube]$ ls
+bin  conf  COPYING  data  elasticsearch  extensions  lib  logs  temp  web
+
+[sonar@sonar sonarqube]$ ls bin/
+
+jsw-license  linux-x86-64  macosx-universal-64  windows-x86-64
+[sonar@sonar sonarqube]$ ls bin/linux-x86-64/
+lib  SonarQube.pid  sonar.sh  wrapper
+[sonar@sonar sonarqube]$ ls bin/linux-x86-64/sonar.sh
+bin/linux-x86-64/sonar.sh
+
+[sonar@sonar sonarqube]$ ls -l  bin/linux-x86-64/sonar.sh
+-rwxrwxr-x. 1 sonar sonar 16393 Jun 17  2019 bin/linux-x86-64/sonar.sh
+[sonar@sonar sonarqube]$
+[sonar@sonar sonarqube]$
+[sonar@sonar sonarqube]$ ls  bin/linux-x86-64/sonar.sh start
+ls: cannot access 'start': No such file or directory
+bin/linux-x86-64/sonar.sh
+
+[sonar@sonar sonarqube]$ sh  bin/linux-x86-64/sonar.sh start
+Starting SonarQube...
+SonarQube is already running.
+
+[sonar@sonar sonarqube]$ sh  bin/linux-x86-64/sonar.sh status
+SonarQube is running (16044).
+[sonar@sonar sonarqube]$
+
+
+[sonar@sonar sonarqube]$ ls
+bin  conf  COPYING  data  elasticsearch  extensions  lib  logs  temp  web
+[sonar@sonar sonarqube]$
+[sonar@sonar sonarqube]$
+[sonar@sonar sonarqube]$ cd bin/linux-x86-64/
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$ ls
+lib  SonarQube.pid  sonar.sh  wrapper
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$ pwd
+/opt/sonarqube/bin/linux-x86-64
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$
+[sonar@sonar linux-x86-64]$ sh sonar.sh
+Usage: sonar.sh { console | start | stop | force-stop | restart | status | dump }
+[sonar@sonar linux-x86-64]$ sh sonar.sh stop
+Gracefully stopping SonarQube...
+Stopped SonarQube.
+
+
+Relative  path [sonar@sonar linux-x86-64]$ sh sonar.sh start
+Starting SonarQube...
+Started SonarQube.
+[sonar@sonar linux-x86-64]$
+
+Absolute path 
+sh /opt/sonarqube/bin/linux-x86-64/sonar.sh start 
+sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status
+
+If you want to chang the port number of sonar just go to 
+
+--- vi sonar.properties--- and cahnge the port number
+
+We can run more than 20 + aplication on sonar 
+
+
+To Login into Sonar we use 
+
+Login  == admin
+Passwd == admin 
+
+
+
+
+Last login: Wed Mar 30 02:18:13 2022 from 73.87.33.150
+[ec2-user@maven ~]$ clear
+[ec2-user@maven ~]$ ls
+java-project
+
+[ec2-user@maven ~]$ git clone https://github.com/Woma702/maven-web-application
+Cloning into 'maven-web-application'...
+remote: Enumerating objects: 238, done.
+remote: Counting objects: 100% (72/72), done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 238 (delta 60), reused 46 (delta 46), pack-reused 166
+Receiving objects: 100% (238/238), 559.47 KiB | 39.96 MiB/s, done.
+Resolving deltas: 100% (84/84), done.
+[ec2-user@maven ~]$ ls
+java-project  maven-web-application
+[ec2-user@maven ~]$
+
+
+[ec2-user@maven ~]$ mv maven-web-application/ mwa
+[ec2-user@maven ~]$
+
+
+[ec2-user@maven ~]$ ls
+java-project  mwa
+[ec2-user@maven ~]$
+
+
+[ec2-user@maven ~]$ cd mwa/
+[ec2-user@maven mwa]$
+
+
+[ec2-user@maven mwa]$ ls
+docker-compose.yml  JenkinsfileDeclarative           Jenkinsfile-ebay     src
+Dockerfile          JenkinsfiledeclarativeJuneBathc  JenkinsfileJuly2021
+Jenkinsfile         Jenkinsfile_docker               pom.xml
+[ec2-user@maven mwa]$
+
+
+[ec2-user@maven mwa]$ mvn package
+
+[ec2-user@maven mwa]$ ls target/
+classes            maven-archiver  maven-web-app
+generated-sources  maven-status    maven-web-app.war
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$ mvn clean
+[ec2-user@maven mwa]$ mvn package
+[ec2-user@maven mwa]$ ls
+docker-compose.yml      JenkinsfiledeclarativeJuneBathc  pom.xml
+Dockerfile              Jenkinsfile_docker               src
+Jenkinsfile             Jenkinsfile-ebay                 target
+JenkinsfileDeclarative  JenkinsfileJuly2021
+[ec2-user@maven mwa]$ mvn sonar:sonar
+
+[ec2-user@maven mwa]$ sudo yum install vim
+[ec2-user@maven mwa]$ ls
+docker-compose.yml      JenkinsfiledeclarativeJuneBathc  pom.xml
+Dockerfile              Jenkinsfile_docker               src
+Jenkinsfile             Jenkinsfile-ebay                 target
+JenkinsfileDeclarative  JenkinsfileJuly2021
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$ vi pom.xml
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$
+[ec2-user@maven mwa]$ mvn sonar:sonar
+
+
+============================================================================================
+
+#!/bin/bash
+# Author: Landmark Technology
+# CentOs or REHEL 7/8
+#  Install JAVA pre-requisite
+sudo hostname sonar
+cd /opt
+sudo yum -y install unzip wget git
+sudo wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+sudo yum install jdk-8u131-linux-x64.rpm -y
+#Download the SonarqQube Server software. 
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.8.zip
+sudo unzip sonarqube-7.8.zip
+sudo rm -rf sonarqube-7.8.zip
+sudo mv sonarqube-7.8 sonarqube
+sudo useradd sonar
+# Grand sudo access to sonar user
+sudo echo "sonar ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/sonar
+sudo chown -R sonar:sonar /opt/sonarqube/
+sudo chmod -R 775 /opt/sonarqube/
+# start sonarqube as sonar user using relative path
+sudo su - sonar  
+cd /opt/sonarqube/bin/linux-x86-64/ 
+sh sonar.sh start
+# or start sonarqube as sonar user using sonar.sh absolute path
+sh /opt/sonarqube/bin/linux-x86-64/sonar.sh start 
+sh /opt/sonarqube/bin/linux-x86-64/sonar.sh status
+
+
+
+
+
+
