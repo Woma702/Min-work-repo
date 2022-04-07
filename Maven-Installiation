@@ -351,7 +351,21 @@ chmod 400 key.pem
 
 
 
-
+Lifecycle:
+    1.  clean Lifecycle 
+       mvn clean  --- delete old artifacts
+    2.  site/swagger Lifecycle
+       site --- Create java classes
+    3.  default Lifecycle
+        mvn validate 
+        mvn compile 
+        mvn test 
+        mvn package (target/*war, app.war. app.jar, app.ear)
+        mvn install 
+            (target/*war, app.war. app.jar, app.ear)
+            (MHD/*war, app.war. app.jar, app.ear)
+        mvn sonar:sonar 
+        mvn deploy 
 
 
 
