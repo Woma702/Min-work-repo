@@ -1,0 +1,318 @@
+AWS Acccount.
+Create Redhat EC2 t2.medium Instance with 4GB RAM.
+Create Security Group and open Required ports.
+8081 ..etc
+Attach Security Group to EC2 Instance.
+Install java openJDK 1.8+ for Nexus version 3.15
+Create nexus user to manage the Nexus server
+#As a good security practice, Nexus is not advised to run nexus service as a root user, 
+# so create a new user called nexus and grant sudo access to manage nexus services as follows. 
+sudo hostname nexus
+sudo useradd nexus
+# Grand sudo access to nexus user
+sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
+sudo su - nexus
+Install Java as a pre-requisit for nexus and other softwares
+cd /opt
+sudo yum install wget git nano unzip -y
+sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+Download nexus software and extract it (unzip).
+sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
+sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
+sudo rm -rf nexus-3.15.2-01-unix.tar.gz 
+sudo mv /opt/nexus-3.15.2-01 /opt/nexus
+Grant permissions for nexus user to start and manage nexus service
+# Change the owner and group permissions to /opt/nexus and /opt/sonatype-work directories.
+sudo chown -R nexus:nexus /opt/nexus
+sudo chown -R nexus:nexus /opt/sonatype-work
+sudo chmod -R 775 /opt/nexus
+sudo chmod -R 775 /opt/sonatype-work
+Open /opt/nexus/bin/nexus.rc file and uncomment run_as_user parameter and set as nexus user.
+# change from #run_as_user="" to [ run_as_user="nexus" ]
+vi /opt/nexus/bin/nexus.rc
+CONFIGURE NEXUS TO RUN AS A SERVICE
+sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+
+#9 Enable and start the nexus services
+sudo systemctl enable nexus
+sudo systemctl start nexus
+sudo systemctl status nexus
+echo "end of nexus installation"
+
+
+
+sudo service nexus restart
+
+
+admin
+admin2626
+
+Create remote repo in nexus 
+
+http://3.83.136.247:8081/repository/Boa-Release/
+
+http://3.83.136.247:8081/repository/Boa-snapshot/
+
+
+you will get this lin in pom.xml in the maven server 
+
+<distributionManagement>
+<repository>
+<id>nexus</id>
+
+the build will failso all we have to do is go into the  
+vi /opt/maven/conf/settings.xml
+userName  --- admin
+Password   admin123
+
+<server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>admin2626</password>
+    </server>
+==========================================================================================================================================================
+Authenticating with public key "Imported-Openssh-Key"
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v22.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ➤ SSH session to ec2-user@3.83.136.247                               │
+    │   • Direct SSH      :  ✔                                             │
+    │   • SSH compression :  ✔                                             │
+    │   • SSH-browser     :  ✔                                             │
+    │   • X11-forwarding  :  ✘  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ➤ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+[ec2-user@ip-172-31-92-152 ~]$ sudo hostnamectl set-hostname nexus
+[ec2-user@ip-172-31-92-152 ~]$
+[ec2-user@ip-172-31-92-152 ~]$
+[ec2-user@ip-172-31-92-152 ~]$
+[ec2-user@ip-172-31-92-152 ~]$ sudo su ec2-user
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$ sudo useradd nexus
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$
+[ec2-user@nexus ~]$ sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
+nexus ALL=(ALL) NOPASSWD:ALL
+[ec2-user@nexus ~]$ sudo su - nexus
+[nexus@nexus ~]$ cd /opt
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ sudo yum install wget git nano unzip -y
+
+[nexus@nexus opt]$ sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+
+[nexus@nexus opt]$ sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz
+
+
+[nexus@nexus opt]$ sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
+
+[nexus@nexus opt]$ sudo mv /opt/nexus-3.15.2-01 /opt/nexus
+[nexus@nexus opt]$ sudo chown -R nexus:nexus /opt/nexus
+[nexus@nexus opt]$ sudo chown -R nexus:nexus /opt/sonatype-work
+[nexus@nexus opt]$ sudo chmod -R 775 /opt/nexus
+[nexus@nexus opt]$ sudo chmod -R 775 /opt/sonatype-work
+[nexus@nexus opt]$ vi /opt/nexus/bin/nexus.rc
+[nexus@nexus opt]$ sudo systemctl enable nexus
+Failed to enable unit: Unit file nexus.service does not exist.
+[nexus@nexus opt]$ sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+[nexus@nexus opt]$ sudo systemctl enable nexus
+nexus.service is not a native service, redirecting to systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable nexus
+[nexus@nexus opt]$ sudo systemctl start nexus
+[nexus@nexus opt]$ sudo systemctl status nexus
+● nexus.service - LSB: nexus
+   Loaded: loaded (/etc/rc.d/init.d/nexus; generated)
+   Active: active (running) since Sun 2022-04-03 18:44:18 UTC; 11s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 16644 ExecStart=/etc/rc.d/init.d/nexus start (code=exited, status=0/>
+    Tasks: 47 (limit: 23558)
+   Memory: 869.2M
+   CGroup: /system.slice/nexus.service
+           └─16806 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-2.el8_5.x86_64>
+
+Apr 03 18:44:18 nexus systemd[1]: Starting LSB: nexus...
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: **********************************>
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: Detected execution as "root" user.>
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: **********************************>
+Apr 03 18:44:18 nexus nexus[16644]: Starting nexus
+Apr 03 18:44:18 nexus systemd[1]: Started LSB: nexus.
+lines 1-16/16 (END)
+● nexus.service - LSB: nexus
+   Loaded: loaded (/etc/rc.d/init.d/nexus; generated)
+   Active: active (running) since Sun 2022-04-03 18:44:18 UTC; 11s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 16644 ExecStart=/etc/rc.d/init.d/nexus start (code=exited, status=0/S
+    Tasks: 47 (limit: 23558)
+   Memory: 869.2M
+   CGroup: /system.slice/nexus.service
+           └─16806 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-2.el8_5.x86_64/
+
+Apr 03 18:44:18 nexus systemd[1]: Starting LSB: nexus...
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: ***********************************
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: Detected execution as "root" user.
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: ***********************************
+Apr 03 18:44:18 nexus nexus[16644]: Starting nexus
+Apr 03 18:44:18 nexus systemd[1]: Started LSB: nexus.
+
+lines 1-16/16 (END)
+● nexus.service - LSB: nexus
+   Loaded: loaded (/etc/rc.d/init.d/nexus; generated)
+   Active: active (running) since Sun 2022-04-03 18:44:18 UTC; 11s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 16644 ExecStart=/etc/rc.d/init.d/nexus start (code=exited, status=0/>
+    Tasks: 47 (limit: 23558)
+   Memory: 869.2M
+   CGroup: /system.slice/nexus.service
+           └─16806 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-2.el8_5.x86_64>
+
+Apr 03 18:44:18 nexus systemd[1]: Starting LSB: nexus...
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: **********************************>
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: Detected execution as "root" user.>
+Apr 03 18:44:18 nexus nexus[16644]: WARNING: **********************************>
+Apr 03 18:44:18 nexus nexus[16644]: Starting nexus
+Apr 03 18:44:18 nexus systemd[1]: Started LSB: nexus.
+
+
+nexus  nexus-3.15.2-01-unix.tar.gz  sonatype-work
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ rm -rf nexus-3.15.2-01-unix.tar.gz
+rm: cannot remove 'nexus-3.15.2-01-unix.tar.gz': Permission denied
+[nexus@nexus opt]$ sudo rm -rf nexus-3.15.2-01-unix.tar.gz
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ ls -l
+total 0
+drwxrwxr-x. 9 nexus nexus 163 Apr  3 18:40 nexus
+drwxrwxr-x. 3 nexus nexus  20 Apr  3 18:40 sonatype-work
+[nexus@nexus opt]$ ls nexus/
+bin     etc  NOTICE.txt       PRO-LICENSE.txt  system
+deploy  lib  OSS-LICENSE.txt  public
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ cd bin/
+-bash: cd: bin/: No such file or directory
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ ls
+nexus  sonatype-work
+[nexus@nexus opt]$
+[nexus@nexus opt]$
+[nexus@nexus opt]$ cd nexus/
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$ ls
+bin     etc  NOTICE.txt       PRO-LICENSE.txt  system
+deploy  lib  OSS-LICENSE.txt  public
+[nexus@nexus nexus]$ cd nexus/bin/
+-bash: cd: nexus/bin/: No such file or directory
+[nexus@nexus nexus]$ cd bin/
+[nexus@nexus bin]$
+[nexus@nexus bin]$
+[nexus@nexus bin]$ ls
+contrib  nexus  nexus.rc  nexus.vmoptions
+[nexus@nexus bin]$
+[nexus@nexus bin]$ cd ..
+[nexus@nexus nexus]$ ls
+bin     etc  NOTICE.txt       PRO-LICENSE.txt  system
+deploy  lib  OSS-LICENSE.txt  public
+[nexus@nexus nexus]$ ls
+bin     etc  NOTICE.txt       PRO-LICENSE.txt  system
+deploy  lib  OSS-LICENSE.txt  public
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$ cd bin/
+[nexus@nexus bin]$
+[nexus@nexus bin]$
+[nexus@nexus bin]$ ls
+contrib  nexus  nexus.rc  nexus.vmoptions
+[nexus@nexus bin]$ cd nexus
+-bash: cd: nexus: Not a directory
+[nexus@nexus bin]$ cd nexus/
+-bash: cd: nexus/: Not a directory
+[nexus@nexus bin]$ cd nexus.rc
+-bash: cd: nexus.rc: Not a directory
+[nexus@nexus bin]$ ls
+contrib  nexus  nexus.rc  nexus.vmoptions
+[nexus@nexus bin]$
+[nexus@nexus bin]$
+[nexus@nexus bin]$
+[nexus@nexus bin]$ cd contrib/
+[nexus@nexus contrib]$
+[nexus@nexus contrib]$
+[nexus@nexus contrib]$ ls
+karaf-service.sh                    karaf-service-template.solaris-smf
+karaf-service-template.conf         karaf-service-template.systemd
+karaf-service-template.init         karaf-service-template.systemd-instances
+karaf-service-template.init-debian  karaf-service-win.exe
+karaf-service-template.init-redhat  karaf-service-win.xml
+[nexus@nexus contrib]$
+[nexus@nexus contrib]$
+[nexus@nexus contrib]$
+[nexus@nexus contrib]$ cd ../../
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$
+[nexus@nexus nexus]$ ls
+bin     etc  NOTICE.txt       PRO-LICENSE.txt  system
+deploy  lib  OSS-LICENSE.txt  public
+[nexus@nexus nexus]$ cd etc/
+[nexus@nexus etc]$
+[nexus@nexus etc]$
+[nexus@nexus etc]$ ls
+fabric  jetty  karaf  logback  nexus-default.properties  ssl
+[nexus@nexus etc]$ cdt nexus-default.properties
+-bash: cdt: command not found
+[nexus@nexus etc]$
+[nexus@nexus etc]$
+[nexus@nexus etc]$
+[nexus@nexus etc]$ cd nexus-default.properties
+-bash: cd: nexus-default.properties: Not a directory
+[nexus@nexus etc]$
+[nexus@nexus etc]$
+[nexus@nexus etc]$
+[nexus@nexus etc]$ vi  nexus-default.properties
+[nexus@nexus etc]$
+
+
+
+
+
+Nexus runs with a user always remember that for good job 
+
+sudo yum install wget git nano unzip -y
+sudo yum install java-11-openjdk-devel java-1.8.0-openjdk-devel -y
+Download nexus software and extract it (unzip).
+sudo wget http://download.sonatype.com/nexus/3/nexus-3.15.2-01-unix.tar.gz 
+sudo tar -zxvf nexus-3.15.2-01-unix.tar.gz
+sudo rm -rf nexus-3.15.2-01-unix.tar.gz 
+sudo mv /opt/nexus-3.15.2-01 /opt/nexus
+Grant permissions for nexus user to start and manage nexus service
+# Change the owner and group permissions to /opt/nexus and /opt/sonatype-work directories.
+sudo chown -R nexus:nexus /opt/nexus
+sudo chown -R nexus:nexus /opt/sonatype-work
+sudo chmod -R 775 /opt/nexus
+sudo chmod -R 775 /opt/sonatype-work
+Open /opt/nexus/bin/nexus.rc file and uncomment run_as_user parameter and set as nexus user.
+# change from #run_as_user="" to [ run_as_user="nexus" ]
+vi /opt/nexus/bin/nexus.rc
+CONFIGURE NEXUS TO RUN AS A SERVICE
+sudo ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
+
+#9 Enable and start the nexus services
+sudo systemctl enable nexus
+sudo systemctl start nexus
+sudo systemctl status nexus
+echo "end of nexus installation"
+
+sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
+sudo su - nexus
