@@ -316,3 +316,8 @@ echo "end of nexus installation"
 
 sudo echo "nexus ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/nexus
 sudo su - nexus
+
+
+  default:
+  userName: admin
+  password: admin2626
